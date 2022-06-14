@@ -245,7 +245,7 @@ int main()
                 {
                     printf("\n\n1 - Jogador%d a jogar: \n",jogada);
                 }
-                else if(jogada==3)
+                else if(jogada==2)
                 {
                     printf("\n\n1 - BOT a jogar: \n");
                 }
@@ -292,10 +292,11 @@ int main()
                     if(gTab1==1)
                     {
                         setPos(TabuleiroFinal.p,0,0,Jogador1.c);
+
                     }
                     else if(gTab1==2)
                     {
-                        setPos(TabuleiroFinal.p,0,0,Jogador2.c);
+                        setPos(TabuleiroFinal.p,0,0,BOT.c);
                     }
 
                     if(gTab2==1)
@@ -304,7 +305,7 @@ int main()
                     }
                     else if(gTab2==2)
                     {
-                        setPos(TabuleiroFinal.p,0,1,Jogador2.c);
+                        setPos(TabuleiroFinal.p,0,1,BOT.c);
                     }
 
                     if(gTab3==1)
@@ -313,7 +314,7 @@ int main()
                     }
                     else if(gTab3==2)
                     {
-                        setPos(TabuleiroFinal.p,0,2,Jogador2.c);
+                        setPos(TabuleiroFinal.p,0,2,BOT.c);
                     }
 
                     if(gTab4==1)
@@ -322,7 +323,7 @@ int main()
                     }
                     else if(gTab4==2)
                     {
-                        setPos(TabuleiroFinal.p,1,0,Jogador2.c);
+                        setPos(TabuleiroFinal.p,1,0,BOT.c);
                     }
 
                     if(gTab5==1)
@@ -331,7 +332,7 @@ int main()
                     }
                     else if(gTab5==2)
                     {
-                        setPos(TabuleiroFinal.p,1,1,Jogador2.c);
+                        setPos(TabuleiroFinal.p,1,1,BOT.c);
                     }
 
                     if(gTab6==1)
@@ -340,7 +341,7 @@ int main()
                     }
                     else if(gTab6==2)
                     {
-                        setPos(TabuleiroFinal.p,1,2,Jogador2.c);
+                        setPos(TabuleiroFinal.p,1,2,BOT.c);
                     }
 
                     if(gTab7==1)
@@ -349,7 +350,7 @@ int main()
                     }
                     else if(gTab7==2)
                     {
-                        setPos(TabuleiroFinal.p,2,0,Jogador2.c);
+                        setPos(TabuleiroFinal.p,2,0,BOT.c);
                     }
 
                     if(gTab8==1)
@@ -358,7 +359,7 @@ int main()
                     }
                     else if(gTab8==2)
                     {
-                        setPos(TabuleiroFinal.p,2,1,Jogador2.c);
+                        setPos(TabuleiroFinal.p,2,1,BOT.c);
                     }
 
                     if(gTab9==1)
@@ -367,7 +368,7 @@ int main()
                     }
                     else if(gTab9==2)
                     {
-                        setPos(TabuleiroFinal.p,2,2,Jogador2.c);
+                        setPos(TabuleiroFinal.p,2,2,BOT.c);
                     }
 
                     GanhouTabFinal(TabuleiroFinal, &gTabF, &jogada);
@@ -378,13 +379,17 @@ int main()
 
                         printf("\n\n\nAcabou o Jogo!");
                         printf("\nGanhou o Jogador%d",vencedor);
+                        printf("\n\n\n");
+                        mostraMat(TabuleiroFinal.p, NLin2, NCol2);
+                        return;
                     }
                     else if(gTabF ==2)
                     {
-                        vencedor = 2;
-
                         printf("\n\n\nAcabou o Jogo!");
-                        printf("\nGanhou o Jogador%d",vencedor);
+                        printf("\nGanhou o BOT");
+                        printf("\n\n\n");
+                        mostraMat(TabuleiroFinal.p, NLin2, NCol2);
+                        return;
                     }
                     break;
 

@@ -179,18 +179,18 @@ int MostrarLista(struct Lista* L, int nJogada)
         }
         if(count >= n)
         {
-        if(count%2 == 0)
-        {
-        printf("Jogador1 jogou:\n");
-        printf("Linha: %d\n", t2->linha);
-        printf("Coluna:% d\n\n", t2->coluna);
-        }
-        else
-        {
-        printf("Jogador2 jogou:\n");
-        printf("Linha: %d\n", t2->linha);
-        printf("Coluna:% d\n\n", t2->coluna);
-        }
+            if(count%2 == 0)
+            {
+                printf("Jogador1 jogou:\n");
+                printf("Linha: %d\n", t2->linha);
+                printf("Coluna:% d\n\n", t2->coluna);
+            }
+            else
+            {
+                printf("Jogador2 jogou:\n");
+                printf("Linha: %d\n", t2->linha);
+                printf("Coluna:% d\n\n", t2->coluna);
+            }
         }
         count++;
     }
@@ -219,18 +219,18 @@ int MostrarLista2(struct Lista* L, int nJogada)
         }
         if(count >= n)
         {
-        if(count%2 == 0)
-        {
-        printf("Jogador1 jogou:\n");
-        printf("Linha: %d\n", t2->linha);
-        printf("Coluna:% d\n\n", t2->coluna);
-        }
-        else
-        {
-        printf("BOT jogou:\n");
-        printf("Linha: %d\n", t2->linha);
-        printf("Coluna:% d\n\n", t2->coluna);
-        }
+            if(count%2 == 0)
+            {
+                printf("Jogador1 jogou:\n");
+                printf("Linha: %d\n", t2->linha);
+                printf("Coluna:% d\n\n", t2->coluna);
+            }
+            else
+            {
+                printf("BOT jogou:\n");
+                printf("Linha: %d\n", t2->linha);
+                printf("Coluna:% d\n\n", t2->coluna);
+            }
         }
         count++;
     }
@@ -242,19 +242,22 @@ void GuardaJogo(char *fName, struct Lista* L)
     FILE *f = NULL;
     struct Lista* aux = L;
 
-	if(L == NULL){
-		fprintf(stderr, "\nThe list is empty!\n\n");
-		return;
-	}
+    if(L == NULL)
+    {
+        fprintf(stderr, "\nThe list is empty!\n\n");
+        return;
+    }
 
-    if((f = fopen(fName, "wb")) == NULL){
+    if((f = fopen(fName, "wb")) == NULL)
+    {
         fprintf(stderr, "\nError opening file \"%s\" for writing!\n\n", fName);
         return;
     }
 
-    while(aux != NULL){
-		printf("\nlinha: %d   ||   coluna: %d\n", aux->linha, aux->coluna);
-		fwrite(aux, sizeof(struct Lista), 1, f);
+    while(aux != NULL)
+    {
+        printf("\nlinha: %d   ||   coluna: %d\n", aux->linha, aux->coluna);
+        fwrite(aux, sizeof(struct Lista), 1, f);
         aux = aux->next;
     }
 
@@ -269,7 +272,8 @@ struct Lista ContinuaJogo(char *fName, struct Lista* L)
     struct Lista* ultima = NULL;
     struct Lista aux;
 
-    if((f = fopen(fName, "rb")) == NULL){
+    if((f = fopen(fName, "rb")) == NULL)
+    {
         fprintf(stderr, "\nError opening file \"%s\" for reading!\n\n", fName);
         return *L;
     }
@@ -282,33 +286,33 @@ struct Lista ContinuaJogo(char *fName, struct Lista* L)
 
         aux.next = NULL;
 
-            nova = malloc(sizeof(struct Lista));
+        nova = malloc(sizeof(struct Lista));
 
-            if(nova == NULL)
+        if(nova == NULL)
+        {
+            fprintf(stderr, "\nError trying to allocate memory!\n\n");
+            fclose(f);
+            LibertaLista(L);
+            return *L;
+        }
+        else
+        {
+            (*nova) = aux;
+
+            if(L == NULL)
             {
-                fprintf(stderr, "\nError trying to allocate memory!\n\n");
-                fclose(f);
-                LibertaLista(L);
-                return *L;
+                L = nova;
             }
             else
             {
-                (*nova) = aux;
-
-                if(L == NULL)
+                ultima = L;
+                while(ultima->next != NULL)
                 {
-                    L = nova;
+                    ultima = ultima->next;
                 }
-                else
-                {
-                    ultima = L;
-                    while(ultima->next != NULL)
-                    {
-                       ultima = ultima->next;
-                    }
-                    ultima->next = nova;
-                }
+                ultima->next = nova;
             }
+        }
 
     }
 
@@ -325,6 +329,947 @@ int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, 
     ///JOGADOR 1
     if(*jogada == 1)
     {
+        int aux = TabuleiroJogo.miniTab;
+
+        printf("\nDigite a linha e a coluna para jogar no Tabuleiro%d:  ",TabuleiroJogo.miniTab);
+        if(TabuleiroJogo.miniTab == 1)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro1!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro1:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+        }
+        else if(TabuleiroJogo.miniTab == 2)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro2!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro2:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 3)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro3!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro3:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 4)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro4!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro4:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 5)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro5!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro5:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 6)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro6!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro6:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 7)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro7!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro7:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 8)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro8!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro8:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 9)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro9!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro9:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        ///Alinhar Tabuleiro
+        TabuleiroJogo.linha = TabuleiroJogo.linha-1;
+        TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
+        getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
+
+        /// Validação de Casas Ocupadas
+        while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
+        {
+            TabuleiroJogo.miniTab = aux;
+
+            printf("\nCASA OCUPADA - Tente outra vez\n");
+
+            if(TabuleiroJogo.miniTab == 1)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro1!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro1:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            }
+            else if(TabuleiroJogo.miniTab == 2)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro2!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro2:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 3)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro3!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro3:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 4)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro4!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro4:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 5)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro5!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro5:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 6)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro6!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro6:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 7)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro7!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro7:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 8)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro8!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro8:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 9)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro9!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro9:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+
+
+            ///Alinhar Tabuleiro
+            TabuleiroJogo.linha = TabuleiroJogo.linha-1;
+            TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
+            getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
+
+        }
+
+        setPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna, Jogador1.c);
+        *mT = TabuleiroJogo.miniTab;
+        *jogada = 2;
+    }
+
+    ///JOGADOR 2
+    else if(*jogada == 2)
+    {
+        int aux = TabuleiroJogo.miniTab;
+
+        printf("\nDigite a linha e a coluna para jogar no Tabuleiro%d:  ",TabuleiroJogo.miniTab);
+        if(TabuleiroJogo.miniTab == 1)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro1!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro1:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+        }
+        else if(TabuleiroJogo.miniTab == 2)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro2!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro2:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 3)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro3!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro3:");
+                printf("\n\n 1 <= linhas <= 3");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 4)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro4!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro4:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 5)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro5!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro5:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 6)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro6!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro6:");
+                printf("\n\n 4 <= linhas <= 6");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 7)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro7!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro7:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 1 <= colunas <= 3");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 8)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro8!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro8:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 4 <= colunas <= 6");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        else if(TabuleiroJogo.miniTab == 9)
+        {
+            printf("\nlinha: ");
+            scanf("%d",&TabuleiroJogo.linha);
+            printf("coluna: ");
+            scanf("%d",&TabuleiroJogo.coluna);
+            printf("\n");
+            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+            {
+                printf("\nNao estas a jogar no Tabuleiro9!!!");
+                printf("\nEstas sao as restricoes do Tabuleiro9:");
+                printf("\n\n 7 <= linhas <= 9");
+                printf("\n 7 <= colunas <= 9");
+                printf("\n\nTenta outra vez.");
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+            }
+            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        }
+        ///Alinhar Tabuleiro
+        TabuleiroJogo.linha = TabuleiroJogo.linha-1;
+        TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
+        getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
+
+        /// Validação de Casas Ocupadas
+        while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
+        {
+            TabuleiroJogo.miniTab = aux;
+
+            printf("\nCASA OCUPADA - Tente outra vez\n");
+
+            if(TabuleiroJogo.miniTab == 1)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro1!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro1:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 2)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro2!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro2:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 3)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro3!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro3:");
+                    printf("\n\n 1 <= linhas <= 3");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 4)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro4!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro4:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 5)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro5!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro5:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 6)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro6!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro6:");
+                    printf("\n\n 4 <= linhas <= 6");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 7)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro7!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro7:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 1 <= colunas <= 3");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 8)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro8!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro8:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 4 <= colunas <= 6");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+            else if(TabuleiroJogo.miniTab == 9)
+            {
+                printf("\nlinha: ");
+                scanf("%d",&TabuleiroJogo.linha);
+                printf("coluna: ");
+                scanf("%d",&TabuleiroJogo.coluna);
+                printf("\n");
+                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
+                {
+                    printf("\nNao estas a jogar no Tabuleiro9!!!");
+                    printf("\nEstas sao as restricoes do Tabuleiro9:");
+                    printf("\n\n 7 <= linhas <= 9");
+                    printf("\n 7 <= colunas <= 9");
+                    printf("\n\nTenta outra vez.");
+                    printf("\nlinha: ");
+                    scanf("%d",&TabuleiroJogo.linha);
+                    printf("coluna: ");
+                    scanf("%d",&TabuleiroJogo.coluna);
+                    printf("\n");
+                }
+                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+
+                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+            }
+
+
+            ///Alinhar Tabuleiro
+            TabuleiroJogo.linha = TabuleiroJogo.linha-1;
+            TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
+            getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
+
+        }
+
+        setPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna, Jogador2.c);
+        *mT = TabuleiroJogo.miniTab;
+        *jogada = 1;
+    }
+}
+
+
+
+
+
+
+
+int Jogadas2(Tab TabuleiroJogo, Jogador Jogador1, Jogador BOT, int *jogada, int *mT, struct Lista** L)
+{
+    ///JOGADOR 1
+    if(*jogada == 1)
+    {
+        int aux = TabuleiroJogo.miniTab;
+
         printf("\nDigite a linha e a coluna para jogar no Tabuleiro%d:  ",TabuleiroJogo.miniTab);
         if(TabuleiroJogo.miniTab == 1)
         {
@@ -550,6 +1495,8 @@ int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, 
         /// Validação de Casas Ocupadas
         while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
         {
+            TabuleiroJogo.miniTab = aux;
+
             printf("\nCASA OCUPADA - Tente outra vez\n");
 
             if(TabuleiroJogo.miniTab == 1)
@@ -782,937 +1729,11 @@ int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, 
         *jogada = 2;
     }
 
-    ///JOGADOR 2
+    ///BOT
     else if(*jogada == 2)
     {
-        printf("\nDigite a linha e a coluna para jogar no Tabuleiro%d:  ",TabuleiroJogo.miniTab);
-        if(TabuleiroJogo.miniTab == 1)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro1!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro1:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
+        int aux = TabuleiroJogo.miniTab;
 
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 2)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro2!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro2:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 3)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro3!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro3:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 4)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro4!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro4:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 5)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro5!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro5:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 6)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro6!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro6:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 7)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro7!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro7:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 8)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro8!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro8:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 9)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro9!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro9:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        ///Alinhar Tabuleiro
-        TabuleiroJogo.linha = TabuleiroJogo.linha-1;
-        TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
-        getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
-
-        /// Validação de Casas Ocupadas
-        while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
-        {
-            printf("\nCASA OCUPADA - Tente outra vez\n");
-
-            if(TabuleiroJogo.miniTab == 1)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro1!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro1:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 2)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro2!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro2:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 3)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro3!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro3:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 4)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro4!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro4:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 5)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro5!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro5:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 6)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro6!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro6:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 7)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro7!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro7:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 8)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro8!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro8:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 9)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro9!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro9:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-
-
-            ///Alinhar Tabuleiro
-            TabuleiroJogo.linha = TabuleiroJogo.linha-1;
-            TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
-            getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
-
-        }
-
-        setPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna, Jogador2.c);
-        *mT = TabuleiroJogo.miniTab;
-        *jogada = 1;
-    }
-}
-
-
-
-
-
-
-int Jogadas2(Tab TabuleiroJogo, Jogador Jogador1, Jogador BOT, int *jogada, int *mT, struct Lista** L)
-{
-    ///JOGADOR 1
-    if(*jogada == 1)
-    {
-        printf("\nDigite a linha e a coluna para jogar no Tabuleiro%d:  ",TabuleiroJogo.miniTab);
-        if(TabuleiroJogo.miniTab == 1)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro1!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro1:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 2)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro2!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro2:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 3)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro3!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro3:");
-                printf("\n\n 1 <= linhas <= 3");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 4)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro4!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro4:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 5)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro5!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro5:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 6)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro6!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro6:");
-                printf("\n\n 4 <= linhas <= 6");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 7)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro7!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro7:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 1 <= colunas <= 3");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 8)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro8!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro8:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 4 <= colunas <= 6");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        else if(TabuleiroJogo.miniTab == 9)
-        {
-            printf("\nlinha: ");
-            scanf("%d",&TabuleiroJogo.linha);
-            printf("coluna: ");
-            scanf("%d",&TabuleiroJogo.coluna);
-            printf("\n");
-            while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-            {
-                printf("\nNao estas a jogar no Tabuleiro9!!!");
-                printf("\nEstas sao as restricoes do Tabuleiro9:");
-                printf("\n\n 7 <= linhas <= 9");
-                printf("\n 7 <= colunas <= 9");
-                printf("\n\nTenta outra vez.");
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-            }
-            InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-            RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-        }
-        ///Alinhar Tabuleiro
-        TabuleiroJogo.linha = TabuleiroJogo.linha-1;
-        TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
-        getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
-
-        /// Validação de Casas Ocupadas
-        while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
-        {
-            printf("\nCASA OCUPADA - Tente outra vez\n");
-
-            if(TabuleiroJogo.miniTab == 1)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro1!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro1:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 2)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro2!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro2:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 3)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 1 && TabuleiroJogo.linha <= 3) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro3!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro3:");
-                    printf("\n\n 1 <= linhas <= 3");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 4)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro4!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro4:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 5)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro5!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro5:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 6)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 4 && TabuleiroJogo.linha <= 6) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro6!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro6:");
-                    printf("\n\n 4 <= linhas <= 6");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 7)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 1 && TabuleiroJogo.coluna <= 3)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro7!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro7:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 1 <= colunas <= 3");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 8)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 4 && TabuleiroJogo.coluna <= 6)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro8!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro8:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 4 <= colunas <= 6");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-            else if(TabuleiroJogo.miniTab == 9)
-            {
-                printf("\nlinha: ");
-                scanf("%d",&TabuleiroJogo.linha);
-                printf("coluna: ");
-                scanf("%d",&TabuleiroJogo.coluna);
-                printf("\n");
-                while(!((TabuleiroJogo.linha >= 7 && TabuleiroJogo.linha <= 9) && (TabuleiroJogo.coluna >= 7 && TabuleiroJogo.coluna <= 9)))
-                {
-                    printf("\nNao estas a jogar no Tabuleiro9!!!");
-                    printf("\nEstas sao as restricoes do Tabuleiro9:");
-                    printf("\n\n 7 <= linhas <= 9");
-                    printf("\n 7 <= colunas <= 9");
-                    printf("\n\nTenta outra vez.");
-                    printf("\nlinha: ");
-                    scanf("%d",&TabuleiroJogo.linha);
-                    printf("coluna: ");
-                    scanf("%d",&TabuleiroJogo.coluna);
-                    printf("\n");
-                }
-                InsereJogada(L,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-
-                RegraJogo(&TabuleiroJogo.miniTab,TabuleiroJogo.linha,TabuleiroJogo.coluna);
-            }
-
-
-            ///Alinhar Tabuleiro
-            TabuleiroJogo.linha = TabuleiroJogo.linha-1;
-            TabuleiroJogo.coluna = TabuleiroJogo.coluna-1;
-            getPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna);
-
-        }
-
-        setPos(TabuleiroJogo.p, TabuleiroJogo.linha, TabuleiroJogo.coluna, Jogador1.c);
-        *mT = TabuleiroJogo.miniTab;
-        *jogada = 3;
-    }
-
-    ///BOT
-    else if(*jogada == 3)
-    {
         printf("\n");
 
         if(TabuleiroJogo.miniTab == 1)
@@ -1810,6 +1831,8 @@ int Jogadas2(Tab TabuleiroJogo, Jogador Jogador1, Jogador BOT, int *jogada, int 
 
         while(TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'X' || TabuleiroJogo.p[TabuleiroJogo.linha][TabuleiroJogo.coluna] == 'O')
         {
+            TabuleiroJogo.miniTab = aux;
+
             if(TabuleiroJogo.miniTab == 1)
             {
 
