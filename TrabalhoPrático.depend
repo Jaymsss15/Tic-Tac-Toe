@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1655210485 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\main.c
+1655215525 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\main.c
 	<stdio.h>
 	<stdlib.h>
 	"matdin.h"
@@ -21,11 +21,11 @@
 	<stdlib.h>
 	<stdio.h>
 
-1655156106 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.c
+1655215713 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.c
 	<stdio.h>
 	<stdlib.h>
 	"matdin.h"
 	"jogo.h"
 
-1655156106 c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.h
+1655214498 c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.h
 

@@ -153,53 +153,81 @@ struct Lista InsereJogada(struct Lista** L, int lin, int col)
 
 
 
-int MostrarLista(struct Lista* L)
+int MostrarLista(struct Lista* L, int nJogada)
 {
     struct Lista* t = NULL;
+    struct Lista* t2 = NULL;
     int count = 0;
+    int n;
+
     for(t = L; t != NULL; t = t->next)
+    {
+        count++;
+    }
+
+    n = count - nJogada;
+    count = 0;
+
+    for(t2 = L; t2 != NULL; t2 = t2->next)
     {
         if(count == 0)
         {
             printf("\n\nLista das Jogadas:\n\n");
         }
+        if(count >= n)
+        {
         if(count%2 == 0)
         {
         printf("Jogador1 jogou:\n");
-        printf("Linha: %d\n", t->linha);
-        printf("Coluna:% d\n\n", t->coluna);
+        printf("Linha: %d\n", t2->linha);
+        printf("Coluna:% d\n\n", t2->coluna);
         }
         else
         {
         printf("Jogador2 jogou:\n");
-        printf("Linha: %d\n", t->linha);
-        printf("Coluna:% d\n\n", t->coluna);
+        printf("Linha: %d\n", t2->linha);
+        printf("Coluna:% d\n\n", t2->coluna);
+        }
         }
         count++;
     }
 }
 
-int MostrarLista2(struct Lista* L)
+int MostrarLista2(struct Lista* L, int nJogada)
 {
     struct Lista* t = NULL;
+    struct Lista* t2 = NULL;
     int count = 0;
+    int n;
+
     for(t = L; t != NULL; t = t->next)
+    {
+        count++;
+    }
+
+    n = count - nJogada;
+    count = 0;
+
+    for(t2 = L; t2 != NULL; t2 = t2->next)
     {
         if(count == 0)
         {
             printf("\n\nLista das Jogadas:\n\n");
         }
+        if(count >= n)
+        {
         if(count%2 == 0)
         {
         printf("Jogador1 jogou:\n");
-        printf("Linha: %d\n", t->linha);
-        printf("Coluna:% d\n\n", t->coluna);
+        printf("Linha: %d\n", t2->linha);
+        printf("Coluna:% d\n\n", t2->coluna);
         }
         else
         {
         printf("BOT jogou:\n");
-        printf("Linha: %d\n", t->linha);
-        printf("Coluna:% d\n\n", t->coluna);
+        printf("Linha: %d\n", t2->linha);
+        printf("Coluna:% d\n\n", t2->coluna);
+        }
         }
         count++;
     }

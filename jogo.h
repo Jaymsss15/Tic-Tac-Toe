@@ -60,8 +60,8 @@ void RegraJogo(int *miniTab, int l, int c);
 
 ///ListaJogadas
 struct Lista InsereJogada(struct Lista** L, int lin, int col);
-int MostrarLista(struct Lista* L);
-int MostrarLista2(struct Lista* L);
+int MostrarLista(struct Lista* L, int nJogada);
+int MostrarLista2(struct Lista* L, int nJogada);
 
 
 int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, int *mT,struct Lista** L);

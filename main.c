@@ -28,6 +28,8 @@ int main()
     int miniTab = 1;
     int vencedor = 0;
 
+    int nJogada;
+
     TabuleiroJogo.miniTab = 1;
 
     int gTab1 = 0, gTab2 = 0, gTab3 = 0, gTab4 = 0, gTab5 = 0, gTab6 = 0, gTab7 = 0, gTab8 = 0, gTab9 = 0;
@@ -201,7 +203,21 @@ int main()
                     }
                     else
                     {
-                    MostrarLista(L);
+
+                        do
+                        {
+                            printf("\nEscreva quantas Jogadas quer ver [1 - 10]: ");
+                            scanf("%d",&nJogada);
+
+                            if(Rondas < nJogada)
+                            {
+                                printf("\nEsse numero e maior que o numero de Jogadas!");
+                            }
+
+                        }
+                        while(nJogada>10 || nJogada<1 || Rondas < nJogada);
+
+                        MostrarLista(L,nJogada);
                     }
 
                     break;
@@ -214,7 +230,6 @@ int main()
                 };
             }
             while(opt != SAIR2 || vencedor!=0);
-            miniTab = 1;
             break;
 
         case JOGAR1vBOT:
@@ -373,17 +388,28 @@ int main()
                     }
                     break;
 
-               case JOGADAS:
-
+                case JOGADAS:
                     if(Rondas == 0)
                     {
                         printf("\n\nAinda nao foram feitas Jogadas!\n\n");
                     }
                     else
                     {
-                    MostrarLista2(L);
-                    }
 
+                        do
+                        {
+                            printf("\nEscreva quantas Jogadas quer ver [1 - 10]: ");
+                            scanf("%d",&nJogada);
+
+                            if(Rondas < nJogada)
+                            {
+                                printf("\nEsse numero e maior que o numero de Jogadas!");
+                            }
+
+                        }
+                        while(nJogada>10 || nJogada<1 || Rondas < nJogada);
+                        MostrarLista2(L,nJogada);
+                    }
                     break;
 
                 case GUARDAR:
@@ -396,8 +422,8 @@ int main()
             break;
 
         case CONTINUAR:
-           //ContinuaJogo(&TabuleiroJogo,&Jogador1,&Jogador2);
-                break;
+            //ContinuaJogo(&TabuleiroJogo,&Jogador1,&Jogador2);
+            break;
 
 
         case REGRAS:
