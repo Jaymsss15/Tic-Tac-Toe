@@ -67,16 +67,6 @@ int menu3()
     return opt;
 }
 
-/*
-int GuardaJogo()
-{
-
-
-int ContinuaJogo()
-{
-
-}*/
-
 
 void RegraJogo(int *miniTab, int l, int c)
 {
@@ -115,6 +105,19 @@ void RegraJogo(int *miniTab, int l, int c)
     else if((l == 3 || l == 6 || l == 9)&&(c == 3 || c == 6 || c == 9))
     {
         *miniTab = 9;
+    }
+}
+
+
+void LibertaLista(struct Lista* L)
+{
+    struct Lista* t = L;
+
+    while(t != NULL)
+    {
+        t = t->next;
+        free(L);
+        L = t;
     }
 }
 
@@ -232,6 +235,88 @@ int MostrarLista2(struct Lista* L, int nJogada)
         count++;
     }
 }
+
+
+void GuardaJogo(char *fName, struct Lista* L)
+{
+    FILE *f = NULL;
+    struct Lista* aux = L;
+
+	if(L == NULL){
+		fprintf(stderr, "\nThe list is empty!\n\n");
+		return;
+	}
+
+    if((f = fopen(fName, "wb")) == NULL){
+        fprintf(stderr, "\nError opening file \"%s\" for writing!\n\n", fName);
+        return;
+    }
+
+    while(aux != NULL){
+		printf("\nlinha: %d   ||   coluna: %d\n", aux->linha, aux->coluna);
+		fwrite(aux, sizeof(struct Lista), 1, f);
+        aux = aux->next;
+    }
+
+    printf("\nJogo Guardado!\n\n");
+    fclose(f);
+}
+
+struct Lista ContinuaJogo(char *fName, struct Lista* L)
+{
+    FILE *f = NULL;
+    struct Lista* nova = NULL;
+    struct Lista* ultima = NULL;
+    struct Lista aux;
+
+    if((f = fopen(fName, "rb")) == NULL){
+        fprintf(stderr, "\nError opening file \"%s\" for reading!\n\n", fName);
+        return *L;
+    }
+
+    LibertaLista(L);
+
+    fscanf(f, " %d %d \n",&aux.linha, &aux.coluna) == 2;
+    while(fread(&aux, sizeof(struct Lista), 1, f) == 1)
+    {
+
+        aux.next = NULL;
+
+            nova = malloc(sizeof(struct Lista));
+
+            if(nova == NULL)
+            {
+                fprintf(stderr, "\nError trying to allocate memory!\n\n");
+                fclose(f);
+                LibertaLista(L);
+                return *L;
+            }
+            else
+            {
+                (*nova) = aux;
+
+                if(L == NULL)
+                {
+                    L = nova;
+                }
+                else
+                {
+                    ultima = L;
+                    while(ultima->next != NULL)
+                    {
+                       ultima = ultima->next;
+                    }
+                    ultima->next = nova;
+                }
+            }
+
+    }
+
+    printf("\nFile and list read successfully!\n\n");
+    fclose(f);
+    return *L;
+}
+
 
 
 int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, int *mT, struct Lista** L)

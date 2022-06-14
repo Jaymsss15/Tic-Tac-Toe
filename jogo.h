@@ -58,10 +58,15 @@ int menu3();
 
 void RegraJogo(int *miniTab, int l, int c);
 
+void LibertaLista(struct Lista* L);
+
 ///ListaJogadas
 struct Lista InsereJogada(struct Lista** L, int lin, int col);
 int MostrarLista(struct Lista* L, int nJogada);
 int MostrarLista2(struct Lista* L, int nJogada);
+
+void GuardaJogo(char *fName, struct Lista* L);
+struct Lista ContinuaJogo(char *fName, struct Lista* L);
 
 
 int Jogadas(Tab TabuleiroJogo, Jogador Jogador1, Jogador Jogador2, int *jogada, int *mT,struct Lista** L);

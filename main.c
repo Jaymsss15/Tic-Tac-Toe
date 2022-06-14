@@ -14,6 +14,7 @@ int main()
     int opt;
 
     struct Lista* L = NULL;
+    char fName[100] = "jogo.bin";
 
     Tab TabuleiroJogo;
     Tab TabuleiroFinal;
@@ -223,8 +224,7 @@ int main()
                     break;
 
                 case GUARDAR:
-
-                    //GuardaJogo(TabuleiroJogo,&Jogador1,&Jogador2);
+                    GuardaJogo(fName,L);
 
                     break;
                 };
@@ -422,7 +422,7 @@ int main()
             break;
 
         case CONTINUAR:
-            //ContinuaJogo(&TabuleiroJogo,&Jogador1,&Jogador2);
+            ContinuaJogo(fName, L);
             break;
 
 
