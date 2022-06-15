@@ -2,7 +2,22 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
+	<File name="jogo.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="604" topLine="35" />
+		</Cursor>
+	</File>
+	<File name="utils.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="54" topLine="0" />
+		</Cursor>
+	</File>
 	<File name="utils.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="54" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="matdin.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="54" topLine="0" />
 		</Cursor>
@@ -12,14 +27,33 @@
 			<Cursor1 position="54" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="jogo.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="604" topLine="35" />
+			<Cursor1 position="6296" topLine="183" />
 		</Cursor>
+		<Folding>
+			<Collapse line="306" />
+			<Collapse line="313" />
+			<Collapse line="317" />
+			<Collapse line="323" />
+			<Collapse line="327" />
+			<Collapse line="332" />
+			<Collapse line="336" />
+			<Collapse line="341" />
+			<Collapse line="345" />
+			<Collapse line="350" />
+			<Collapse line="354" />
+			<Collapse line="359" />
+			<Collapse line="363" />
+			<Collapse line="368" />
+			<Collapse line="372" />
+			<Collapse line="377" />
+			<Collapse line="381" />
+		</Folding>
 	</File>
-	<File name="jogo.c" open="1" top="1" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="jogo.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7753" topLine="89" />
+			<Cursor1 position="78323" topLine="104" />
 		</Cursor>
 		<Folding>
 			<Collapse line="71" />
@@ -80,29 +114,15 @@
 			<Collapse line="1857" />
 			<Collapse line="1867" />
 			<Collapse line="1942" />
-			<Collapse line="2043" />
-			<Collapse line="2125" />
-			<Collapse line="2207" />
-			<Collapse line="2289" />
-			<Collapse line="2371" />
-			<Collapse line="2453" />
-			<Collapse line="2536" />
-			<Collapse line="2618" />
+			<Collapse line="2048" />
+			<Collapse line="2135" />
+			<Collapse line="2222" />
+			<Collapse line="2309" />
+			<Collapse line="2396" />
+			<Collapse line="2483" />
+			<Collapse line="2571" />
+			<Collapse line="2658" />
+			<Collapse line="2745" />
 		</Folding>
-	</File>
-	<File name="utils.c" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="54" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="matdin.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="54" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="10019" topLine="282" />
-		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

@@ -194,6 +194,15 @@ int main()
                         printf("\n\n\nAcabou o Jogo!");
                         printf("\nGanhou o Jogador%d",vencedor);
                     }
+
+                    if(gTabF == 0 && gTab1 !=0 && gTab2 !=0 && gTab3 !=0 && gTab4 !=0 && gTab5 !=0 && gTab6 !=0 && gTab7 !=0 && gTab8 !=0 && gTab9 !=0)
+                    {
+                        printf("\n\n\nAcabou o Jogo!");
+                        printf("\nEmpate");
+                        printf("\n\n\n");
+                        mostraMat(TabuleiroFinal.p, NLin2, NCol2);
+                        return;
+                    }
                     break;
 
                 case JOGADAS:
@@ -292,12 +301,14 @@ int main()
                     if(gTab1==1)
                     {
                         setPos(TabuleiroFinal.p,0,0,Jogador1.c);
-
+                        printf("\n\n\n");
                     }
                     else if(gTab1==2)
                     {
                         setPos(TabuleiroFinal.p,0,0,BOT.c);
+                        printf("\n\n\n");
                     }
+
 
                     if(gTab2==1)
                     {
@@ -307,6 +318,7 @@ int main()
                     {
                         setPos(TabuleiroFinal.p,0,1,BOT.c);
                     }
+
 
                     if(gTab3==1)
                     {
@@ -391,6 +403,16 @@ int main()
                         mostraMat(TabuleiroFinal.p, NLin2, NCol2);
                         return;
                     }
+
+                    if(gTabF == 0 && gTab1 !=0 && gTab2 !=0 && gTab3 !=0 && gTab4 !=0 && gTab5 !=0 && gTab6 !=0 && gTab7 !=0 && gTab8 !=0 && gTab9 !=0)
+                    {
+                        printf("\n\n\nAcabou o Jogo!");
+                        printf("\nEmpate");
+                        printf("\n\n\n");
+                        mostraMat(TabuleiroFinal.p, NLin2, NCol2);
+                        return;
+                    }
+
                     break;
 
                 case JOGADAS:

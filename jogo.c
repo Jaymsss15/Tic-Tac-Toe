@@ -1945,6 +1945,11 @@ int GanhouTab1(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=0; i<q; i++)
         if(TabuleiroJogo.p[0][i] != '_')
@@ -2046,6 +2051,11 @@ int GanhouTab2(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=3; i<c; i++)
         if(TabuleiroJogo.p[0][i] != '_')
@@ -2127,6 +2137,11 @@ int GanhouTab3(Tab TabuleiroJogo, int *gTab, int *jogada)
     int i, j, l=3, c=9;
     char x;
     char y;
+
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
 
     ///COLUNA
     for(i=6; i<c; i++)
@@ -2210,6 +2225,11 @@ int GanhouTab4(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=0; i<c; i++)
         if(TabuleiroJogo.p[3][i] != '_')
@@ -2292,6 +2312,11 @@ int GanhouTab5(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=3; i<c; i++)
         if(TabuleiroJogo.p[3][i] != '_')
@@ -2373,6 +2398,11 @@ int GanhouTab6(Tab TabuleiroJogo, int *gTab, int *jogada)
     int i, j, l=6, c=9;
     char x;
     char y;
+
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
 
     ///COLUNA
     for(i=6; i<c; i++)
@@ -2457,6 +2487,11 @@ int GanhouTab7(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=0; i<c; i++)
         if(TabuleiroJogo.p[6][i] != '_')
@@ -2539,6 +2574,11 @@ int GanhouTab8(Tab TabuleiroJogo, int *gTab, int *jogada)
     char x;
     char y;
 
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
+
     ///COLUNA
     for(i=3; i<c; i++)
         if(TabuleiroJogo.p[6][i] != '_')
@@ -2620,6 +2660,11 @@ int GanhouTab9(Tab TabuleiroJogo, int *gTab, int *jogada)
     int i, j, l=9, c=9;
     char x;
     char y;
+
+    if(*gTab == 1 || *gTab == 2)
+    {
+        return;
+    }
 
     ///COLUNA
     for(i=6; i<c; i++)
