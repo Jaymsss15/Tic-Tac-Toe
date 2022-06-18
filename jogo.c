@@ -35,7 +35,8 @@ int menu()
         res = scanf("%d", &opt);
         flush_in();
         puts("\n\n");
-    } while (res != 1 || opt < JOGAR || opt > SAIR);
+    }
+    while (res != 1 || opt < JOGAR || opt > SAIR);
 
     return opt;
 }
@@ -61,7 +62,8 @@ int menu2(int nJogador, int BOT)
 
         res = scanf("%d", &opt);
         flush_in();
-    } while (res != 1 || opt < JOGAR || opt > SAIR2);
+    }
+    while (res != 1 || opt < JOGAR || opt > SAIR2);
 
     return opt;
 }
@@ -89,7 +91,8 @@ int menu3()
         res = scanf("%d", &opt);
         flush_in();
         puts("\n\n");
-    } while (res != 1);
+    }
+    while (res != 1);
 
     return opt;
 }

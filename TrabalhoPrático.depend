@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1655582330 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\main.c
+1655585672 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -22,7 +22,7 @@
 	<stdlib.h>
 	<stdio.h>
 
-1655582558 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.c
+1655585636 source:c:\users\tiago\desktop\universidade tiago\engenharia informática\disciplinas\1ºano\2ºsemestre\programação\trabalho2\trabalhoprático\jogo.c
 	<stdio.h>
 	<stdlib.h>
 	"matdin.h"

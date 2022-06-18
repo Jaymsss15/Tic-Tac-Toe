@@ -26,7 +26,6 @@ int main()
 
     int nJogador = 1;
     int Rondas = 0;
-    int miniTab = 1;
     int vencedor = 0;
     int AI;
 
@@ -222,7 +221,18 @@ int main()
                         return 1;
                     }
 
-                    if (gTabF == 0 && gTab1 != 0 && gTab2 != 0 && gTab3 != 0 && gTab4 != 0 && gTab5 != 0 && gTab6 != 0 && gTab7 != 0 && gTab8 != 0 && gTab9 != 0)
+                    int i,j,c=0;
+                    for(i=0; i<8; i++)
+                    {
+                        for(j=0; j<8; j++)
+                        {
+                            if(TabuleiroJogo.p[i][j] != '_' && gTabF == 0)
+                            {
+                                c++;
+                            }
+                        }
+                    }
+                    if(c==81)
                     {
                         printf("\n\n\nAcabou o Jogo!");
                         printf("\nEmpate");
@@ -242,6 +252,9 @@ int main()
 
                         return 1;
                     }
+
+
+
                     break;
 
                 case JOGADAS:
@@ -264,7 +277,8 @@ int main()
                             }
 
                             flush_in();
-                        } while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
+                        }
+                        while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
 
                         MostrarLista(L, nJogada);
                     }
@@ -277,7 +291,8 @@ int main()
 
                     break;
                 };
-            } while (opt != SAIR2 || vencedor != 0);
+            }
+            while (opt != SAIR2 || vencedor != 0);
 
             libertaMat(TabuleiroJogo.p, NLin);
             libertaMat(TabuleiroFinal.p, NLin2);
@@ -458,11 +473,22 @@ int main()
                         return 1;
                     }
 
-                    if (gTabF == 0 && gTab1 != 0 && gTab2 != 0 && gTab3 != 0 && gTab4 != 0 && gTab5 != 0 && gTab6 != 0 && gTab7 != 0 && gTab8 != 0 && gTab9 != 0)
+                    int i,j,c=0;
+                    for(i=0; i<8; i++)
+                    {
+                        for(j=0; j<8; j++)
+                        {
+                            if(TabuleiroJogo.p[i][j] != '_' && gTabF == 0)
+                            {
+                                c++;
+                            }
+                        }
+                    }
+                    if(c==81)
                     {
                         printf("\n\n\nAcabou o Jogo!");
                         printf("\nEmpate");
-                        printf("\n\n\n");
+                        printf("\n\n");
                         //mostraMat(TabuleiroFinal.p, NLin2, NCol2);
 
                         printf("\nInsira o nome do ficheiro de texto:");
@@ -470,11 +496,12 @@ int main()
                         printf("\n\nNome: ");
                         scanf(" %s", fName);
 
-                        GuardaJogotxtBOT(fName, L);
+                        GuardaJogotxt(fName, L);
 
                         libertaMat(TabuleiroJogo.p, NLin);
                         libertaMat(TabuleiroFinal.p, NLin2);
                         LibertaLista(L);
+
                         return 1;
                     }
 
@@ -498,7 +525,8 @@ int main()
                                 printf("\nEsse numero e maior que o numero de Jogadas!");
                             }
                             flush_in();
-                        } while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
+                        }
+                        while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
                         MostrarListaBOT(L, nJogada);
                     }
                     break;
@@ -509,7 +537,8 @@ int main()
 
                     break;
                 };
-            } while (opt != SAIR2 || vencedor != 0);
+            }
+            while (opt != SAIR2 || vencedor != 0);
             libertaMat(TabuleiroJogo.p, NLin);
             libertaMat(TabuleiroFinal.p, NLin2);
             LibertaLista(L);
@@ -699,11 +728,22 @@ int main()
                             return 1;
                         }
 
-                        if (gTabF == 0 && gTab1 != 0 && gTab2 != 0 && gTab3 != 0 && gTab4 != 0 && gTab5 != 0 && gTab6 != 0 && gTab7 != 0 && gTab8 != 0 && gTab9 != 0)
+                        int i,j,c=0;
+                        for(i=0; i<8; i++)
+                        {
+                            for(j=0; j<8; j++)
+                            {
+                                if(TabuleiroJogo.p[i][j] != '_' && gTabF == 0)
+                                {
+                                    c++;
+                                }
+                            }
+                        }
+                        if(c==81)
                         {
                             printf("\n\n\nAcabou o Jogo!");
                             printf("\nEmpate");
-                            printf("\n\n\n");
+                            printf("\n\n");
                             //mostraMat(TabuleiroFinal.p, NLin2, NCol2);
 
                             printf("\nInsira o nome do ficheiro de texto:");
@@ -711,11 +751,12 @@ int main()
                             printf("\n\nNome: ");
                             scanf(" %s", fName);
 
-                            GuardaJogotxtBOT(fName, L);
+                            GuardaJogotxt(fName, L);
 
                             libertaMat(TabuleiroJogo.p, NLin);
                             libertaMat(TabuleiroFinal.p, NLin2);
                             LibertaLista(L);
+
                             return 1;
                         }
 
@@ -739,7 +780,8 @@ int main()
                                     printf("\nEsse numero e maior que o numero de Jogadas!");
                                 }
                                 flush_in();
-                            } while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
+                            }
+                            while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
                             MostrarListaBOT(L, nJogada);
                         }
                         break;
@@ -750,7 +792,8 @@ int main()
 
                         break;
                     };
-                } while (opt != SAIR2 || vencedor != 0);
+                }
+                while (opt != SAIR2 || vencedor != 0);
                 libertaMat(TabuleiroJogo.p, NLin);
                 libertaMat(TabuleiroFinal.p, NLin2);
                 LibertaLista(L);
@@ -923,12 +966,23 @@ int main()
                             return 1;
                         }
 
-                        if (gTabF == 0 && gTab1 != 0 && gTab2 != 0 && gTab3 != 0 && gTab4 != 0 && gTab5 != 0 && gTab6 != 0 && gTab7 != 0 && gTab8 != 0 && gTab9 != 0)
+                        int i,j,c=0;
+                        for(i=0; i<8; i++)
+                        {
+                            for(j=0; j<8; j++)
+                            {
+                                if(TabuleiroJogo.p[i][j] != '_' && gTabF == 0)
+                                {
+                                    c++;
+                                }
+                            }
+                        }
+                        if(c==81)
                         {
                             printf("\n\n\nAcabou o Jogo!");
                             printf("\nEmpate");
-                            printf("\n\n\n");
-                            mostraMat(TabuleiroFinal.p, NLin2, NCol2);
+                            printf("\n\n");
+                            //mostraMat(TabuleiroFinal.p, NLin2, NCol2);
 
                             printf("\nInsira o nome do ficheiro de texto:");
                             printf("\nExemplo: jogo.txt");
@@ -965,7 +1019,8 @@ int main()
                                 }
 
                                 flush_in();
-                            } while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
+                            }
+                            while (nJogada > 10 || nJogada < 1 || Rondas < nJogada);
 
                             MostrarLista(L, nJogada);
                         }
@@ -978,7 +1033,8 @@ int main()
 
                         break;
                     };
-                } while (opt != SAIR2 || vencedor != 0);
+                }
+                while (opt != SAIR2 || vencedor != 0);
 
                 libertaMat(TabuleiroJogo.p, NLin);
                 libertaMat(TabuleiroFinal.p, NLin2);
@@ -993,11 +1049,13 @@ int main()
             do
             {
                 opt = menu3();
-            } while (opt != 1);
+            }
+            while (opt != 1);
 
             break;
         };
-    } while (opt != SAIR || vencedor != 0);
+    }
+    while (opt != SAIR || vencedor != 0);
 
     libertaMat(TabuleiroJogo.p, NLin);
     libertaMat(TabuleiroFinal.p, NLin2);
